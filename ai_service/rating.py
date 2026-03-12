@@ -1,0 +1,1 @@
+# rating formula (validated earlier)
