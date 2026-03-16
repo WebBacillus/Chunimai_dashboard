@@ -8,13 +8,9 @@ if (!dbUrl) throw new Error("DATABASE_URL is required");
 const sql = new SQL({ url: dbUrl, max: 2, idleTimeout: 30 });
 
 const app = new Elysia()
-  .use(
-    staticPlugin({
-      assets: "public",
-      prefix: "/",
-      indexHTML: true,
-    })
-  )
+  .get("/", async () => {
+    return Bun.file("public/index.html");
+  })
   .get("/api/years", async () => {
     const currentYear = String(new Date().getFullYear());
 
