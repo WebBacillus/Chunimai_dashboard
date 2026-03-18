@@ -13,11 +13,5 @@ dependencies = [
     "openai>=1.0",
     "pydantic>=2.0",
     "python-dotenv>=1.0",
+    "requests>=2.32.5",
 ]
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.uv]
-dev-dependencies = []

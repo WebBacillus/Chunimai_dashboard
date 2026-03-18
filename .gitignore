@@ -2,3 +2,15 @@ node_modules/
 .env
 .DS_Store
 bun.lock
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+uv.lock
+
+# Player data (sensitive)
+2026-03-13T11:04:00.000Z-undefined.json
+full-2026-03-13T11:04:00.000Z-undefined.json
+response.json
