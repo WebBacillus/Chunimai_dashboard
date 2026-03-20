@@ -185,7 +185,6 @@ def suggest_songs(
             
             current_score = improvable[key]
             current_rank, current_pct = get_rank_info(current_score)
-            current_pct_str = f"{current_pct:.4f}%"
             current_rating_song = calculate_song_rating(constant, current_score)
             
             target_rank, target_score = get_next_rank(current_score)
@@ -205,7 +204,6 @@ def suggest_songs(
                     "current_score": current_score,
                     "current_rank": current_rank,
                     "current_pct": current_pct,
-                    "current_pct_str": current_pct_str,
                     "target_rank": target_rank,
                     "target_score": target_score,
                     "potential_rating": potential_rating,
@@ -253,10 +251,6 @@ def suggest_songs(
                 "difficulty": s.get("difficulty", ""),
                 "chartType": s.get("chartType", ""),
                 "current_rating": current_rating_song,
-                "current_score": s.get("current_score", 0),
-                "current_rank": s.get("current_rank", ""),
-                "current_pct": s.get("current_pct", 0),
-                "current_pct_str": s.get("current_pct_str", "0.0000%"),
                 "max_rating": max_rating,
                 "type": "improve"
             })
@@ -339,22 +333,18 @@ def suggest_songs(
                     "achievement": round(min_score / 10000, 2),
                     "potential_rating": target_r,
                 },
-                "gain_needed": actual_gain,
-                "max_gain": potential_gain,
-                "type": song_opt["type"],
-                "current_score": song_opt.get("current_score", 0),
-                "current_rank": song_opt.get("current_rank", ""),
-                "current_pct_str": song_opt.get("current_pct_str", ""),
+                "gain": actual_gain,
+                "type": song_opt["type"]
             })
             
             remaining -= actual_gain
         
-        projected = current_rating + sum(s["gain_needed"] for s in selected)
+        projected = current_rating + sum(s["gain"] for s in selected)
         
         suggestions["rating_needed"] = rating_needed
         suggestions["songs"] = selected
         suggestions["projected_rating"] = projected
-        suggestions["message"] = f"Here's the easiest path to reach {target_rating}! (+{sum(s['gain_needed'] for s in selected)} rating from {len(selected)} songs)"
+        suggestions["message"] = f"Here's the easiest path to reach {target_rating}! (+{sum(s['gain'] for s in selected)} rating from {len(selected)} songs)"
     else:
         improvements_sorted = sorted(improvements, key=lambda x: x["rating_gain"])
         

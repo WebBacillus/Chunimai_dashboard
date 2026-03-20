@@ -9,7 +9,6 @@ __pycache__/
 *.pyo
 .venv/
 uv.lock
-.ruff_cache/
 
 # Player data (sensitive)
 2026-03-13T11:04:00.000Z-undefined.json
