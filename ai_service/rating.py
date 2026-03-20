@@ -9,6 +9,7 @@ COVER_BASE_URL = "https://maimai.wonderhoy.me/api/imageProxy?img="
 # Player data paths (relative to project root)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PLAYER_DATA_FILE = os.path.join(PROJECT_ROOT, "2026-03-13T11:04:00.000Z-undefined.json")
+FULL_PLAYER_DATA_FILE = os.path.join(PROJECT_ROOT, "full-2026-03-13T11:04:00.000Z-undefined.json")
 
 def get_cover_url(image_filename: str) -> str:
     """Get full cover image URL from filename."""
@@ -169,6 +170,28 @@ def get_player_data():
             "docker_command": SCRAPER_DOCKER_COMMAND,
         }
     return load_data_from_json(PLAYER_DATA_FILE)
+
+
+def get_full_player_data():
+    """
+    Load full player data (all history) or return error with instructions.
+    
+    Returns:
+        dict: Full player data if exists
+        dict: Error with instructions if not
+    """
+    if not os.path.exists(FULL_PLAYER_DATA_FILE):
+        return {
+            "error": "Full player data not found",
+            "instructions": [
+                "Run the scraper with full history enabled to get your data:",
+                SCRAPER_DOCKER_COMMAND,
+                "",
+                "Then upload the resulting JSON file to the dashboard.",
+            ],
+            "docker_command": SCRAPER_DOCKER_COMMAND,
+        }
+    return load_data_from_json(FULL_PLAYER_DATA_FILE)
 
 
 def get_all_songs(version: str = "CiRCLE", local_path: str = None) -> list:
